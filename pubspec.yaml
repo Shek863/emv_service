@@ -4,7 +4,8 @@ version: 0.0.1
 homepage: https://wizzitdigital.com
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  #sdk: '>=2.19.6 <3.0.0'
+  sdk: ' >=3.0.0-134.0.dev <4.0.0'
   flutter: ">=2.5.0"
 
 dependencies:
@@ -12,8 +13,8 @@ dependencies:
     sdk: flutter
   http: ^0.13.6
   intl: ^0.18.1
-  nfc_manager: 2.0.3
-  build_runner: ^2.3.3
+  nfc_manager: ^3.2.0
+  build_runner: ^2.4.4
   json_annotation: ^4.8.1
   json_serializable: ^6.6.2
   platform_device_id: ^1.0.1
