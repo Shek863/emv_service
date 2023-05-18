@@ -1,9 +1,6 @@
 package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugins.deviceinfo.DeviceInfoPlugin;
-import io.flutter.plugins.nfcmanager.NfcManagerPlugin;
-import com.di1shuai.platform_device_id.PlatformDeviceIdPlugin;
 
 /**
  * Generated file. Do not edit.
@@ -13,9 +10,6 @@ public final class GeneratedPluginRegistrant {
     if (alreadyRegisteredWith(registry)) {
       return;
     }
-    DeviceInfoPlugin.registerWith(registry.registrarFor("io.flutter.plugins.deviceinfo.DeviceInfoPlugin"));
-    NfcManagerPlugin.registerWith(registry.registrarFor("io.flutter.plugins.nfcmanager.NfcManagerPlugin"));
-    PlatformDeviceIdPlugin.registerWith(registry.registrarFor("com.di1shuai.platform_device_id.PlatformDeviceIdPlugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {

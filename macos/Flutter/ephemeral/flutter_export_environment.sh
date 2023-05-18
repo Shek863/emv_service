@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/usr/local/Caskroom/flutter/3.7.12/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/mac/work/projects/wizzit/emv_services"
+export "FLUTTER_APPLICATION_PATH=/Users/mac/work/projects/wizzit/bck/emv_servics"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=0.0.1"

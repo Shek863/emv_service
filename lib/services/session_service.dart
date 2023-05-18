@@ -81,7 +81,6 @@ class SessionService extends ChangeNotifier {
     if (response.statusCode == 200) {
       var url = jsonDecode(response.body);
       if (url['url'] != null) {
-        print('___PAYMENT_SESSION:${url['url']}');
         return Uri.parse(url['url']);
       }
     }
