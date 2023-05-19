@@ -8,5 +8,5 @@ class PaymentSessionListener {
 
   void onCPComplete(SessionStatus status) {}
 
-  void onProcess(Widget widget) {}
+  void onProcess(Navigator route) {}
 }
