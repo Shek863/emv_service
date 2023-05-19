@@ -2,9 +2,11 @@ import 'model/session_status.dart';
 import 'package:flutter/cupertino.dart';
 
 class PaymentSessionListener {
-  void onTimeOut(BuildContext context) {}
+  void onTimeOut() {}
 
-  void onCNPComplete(BuildContext context) {}
+  void onCNPComplete() {}
 
-  void onCPComplete(BuildContext context, SessionStatus status) {}
+  void onCPComplete(SessionStatus status) {}
+
+  void onProcess(Widget widget) {}
 }
