@@ -1,5 +1,5 @@
 import 'model/session_status.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PaymentSessionListener {
   void detach(){}
@@ -10,6 +10,6 @@ class PaymentSessionListener {
 
   void onCPComplete(SessionStatus status) {}
 
-  void onProcess(Navigator route) {}
+  void onProcess(MaterialPageRoute route) {}
 
 }
