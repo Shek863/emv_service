@@ -46,4 +46,14 @@ class Config {
       url: prod ? prodUrl : stagingUrl,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'url': url,
+      'otpUrl': otpUrl,
+      'merchantId': merchantId,
+      'merchantCode': merchantCode,
+      'bankTerminalId': bankTerminalId,
+    };
+  }
 }

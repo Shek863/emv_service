@@ -6,6 +6,15 @@ class SessionStatus {
   String? message;
   Map<String, dynamic>? responseData;
 
+  SessionStatus({
+    this.code,
+    this.timeout,
+    this.message,
+    this.success,
+    required this.status,
+    this.responseData = const {},
+  });
+
   SessionStatus.fromJson(Map<String, dynamic> json)
       : code = json['code'],
         status = json['status'],

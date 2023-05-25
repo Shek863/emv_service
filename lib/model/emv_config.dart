@@ -30,6 +30,7 @@ class EMVConfig {
   Map<String, dynamic> toJson() {
     return {
       'isAbsa': true,
+      'config': config.toJson(),
       'readerLimit': readerLimit,
       'countryCode': countryCode,
       'currencyCode': currencyCode,
