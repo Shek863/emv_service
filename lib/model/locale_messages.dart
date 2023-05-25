@@ -2,6 +2,7 @@ import 'locale_message.dart';
 
 class LocaleMessages {
   final LocaleMessage time;
+  final LocaleMessage cardPin;
   final LocaleMessage tapCard;
   final LocaleMessage removeCard;
   final LocaleMessage sessionInit;
@@ -9,6 +10,10 @@ class LocaleMessages {
   final LocaleMessage sessionProcession;
 
   const LocaleMessages({
+    this.cardPin = const LocaleMessage(
+      title: 'Enter Card PIN',
+      message: 'Enter card pin',
+    ),
     this.time = const LocaleMessage(
       title: 'Time',
       message: 'sec',
