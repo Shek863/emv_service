@@ -1,3 +1,3 @@
 class PrintingListener{
- void print(dynamic data){}
+ void onPrintingResult(bool isSuccess){}
 }
