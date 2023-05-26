@@ -22,4 +22,18 @@ class PrinterReceipt {
     this.showBarCode,
     this.merchantName,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'fee': fee,
+      'date': date,
+      'time': time,
+      'total': total,
+      'amount': amount,
+      'approved': approved,
+      'base64Logo': base64Logo,
+      'showBarCode': showBarCode,
+      'merchantName': merchantName,
+    };
+  }
 }
