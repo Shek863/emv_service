@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.6
+  http: ^1.0.0
   intl: ^0.18.1
   build_runner: ^2.4.4
   json_annotation: ^4.8.1
