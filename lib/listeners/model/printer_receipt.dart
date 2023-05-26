@@ -32,6 +32,7 @@ class PrinterReceipt {
       'amount': amount,
       'approved': approved,
       'base64Logo': base64Logo,
+      'textDetail': textDetail,
       'showBarCode': showBarCode,
       'merchantName': merchantName,
     };
