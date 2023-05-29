@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 import '../services/emv_session_processor.dart';
 
 class PaymentSessionListener {
-  //void detach(){}
-
-  //void onTimeOut() {}
+  void onTimeOut() {}
 
   void onCNPComplete() {}
 
   void onCPComplete(SessionStatus status) {}
-
-  //void onProcess(MaterialPageRoute route) {}
 
   EmvSessionProcessor getProcessor() {
     return EmvSessionProcessor();
