@@ -291,4 +291,33 @@ class SessionService extends ChangeNotifier {
     }
     return [];
   }
+
+  Future<bool> rejectPaymentRequest(String sessionId) async {
+    var response = await http.post(
+      Uri.https(config.url, '/api/v1/delete_pending_tx'),
+      body: jsonEncode({
+        "session_id": sessionId,
+      }),
+      headers: {
+        'Authorization': 'Basic $auth2',
+        'Content-Type': 'application/json',
+      },
+    );
+    return response.statusCode == 200;
+  }
+
+  /// Place-holder fo profile de-registration
+  Future<bool> deregisterProfile(String profileId) async {
+    var response = await http.post(
+      Uri.https(config.url, '/api/v1/delete_profile'),
+      body: jsonEncode({
+        "profile_id": profileId,
+      }),
+      headers: {
+        'Authorization': 'Basic $auth2',
+        'Content-Type': 'application/json',
+      },
+    );
+    return response.statusCode == 200;
+  }
 }
