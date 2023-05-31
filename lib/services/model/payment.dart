@@ -33,6 +33,11 @@ class Payment {
       transactionResults.containsKey('completed') &&
       transactionResults['completed'] == true;
 
+  bool get isRejected =>
+      isProcessed &&
+      transactionResults.containsKey('code') &&
+      transactionResults['code'] == '17';
+
   int get maxAmount => meta['maxAmount'] ?? 0;
 
   String get contractNumber => meta['contractNumber'] ?? '';
