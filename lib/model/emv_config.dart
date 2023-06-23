@@ -1,6 +1,7 @@
 import '../services/model/config.dart';
 
 class EMVConfig {
+  bool? isAbsa;
   int? signatureFlag;
   int? pinRequirement;
   double? readerLimit;
@@ -14,6 +15,7 @@ class EMVConfig {
   bool? overrideProfileConfig;
 
   EMVConfig({
+    this.isAbsa = false,
     required this.config,
     this.signatureFlag = 1,
     this.pinRequirement = 1,
@@ -29,7 +31,7 @@ class EMVConfig {
 
   Map<String, dynamic> toJson() {
     return {
-      'isAbsa': true,
+      'isAbsa': isAbsa,
       'config': config.toJson(),
       'readerLimit': readerLimit,
       'countryCode': countryCode,
