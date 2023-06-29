@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'model/config.dart';
 import '../model/profile.dart';
 import 'package:http/http.dart';
-import 'emv_platform_service.dart';
 import 'package:http/http.dart' as http;
 import '../services/session_service.dart';
 
@@ -85,8 +84,8 @@ class RegistrationService {
     required String firebaseId,
     required String lastName,
     required String firstName,
+    required String deviceId,
   }) async {
-    var deviceId = await EmvPlatformService.getDeviceId();
     var response = await http.post(
       Uri.https(config.url, '/api/v1/mevo/terminal/register_terminal'),
       body: jsonEncode({
@@ -103,7 +102,7 @@ class RegistrationService {
       },
     );
     if (response.statusCode == 200) {
-      var registration = await service.getRegistration();
+      var registration = await service.getRegistration(deviceId: deviceId);
       if (registration.success) {
         return Profile.fromRegistration(registration);
       }

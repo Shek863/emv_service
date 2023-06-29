@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'model/config.dart';
 import 'model/payment.dart';
 import '../model/profile.dart';
-import 'emv_platform_service.dart';
 import 'model/transaction_entry.dart';
 import '../model/payment_request.dart';
 import 'package:http/http.dart' as http;
@@ -18,8 +17,7 @@ class SessionService extends ChangeNotifier {
 
   SessionService(this.config);
 
-  Future<RegistrationStatus> getRegistration() async {
-    var deviceId = await EmvPlatformService.getDeviceId();
+  Future<RegistrationStatus> getRegistration({required String deviceId}) async {
     var response = await http.post(
       Uri.https(
         config.url,
@@ -45,12 +43,12 @@ class SessionService extends ChangeNotifier {
     });
   }
 
-  void doCheckRegistration(SessionRegistrationListener listener) async {
-    listener(await getRegistration());
+  void doCheckRegistration(SessionRegistrationListener listener,
+      {required String deviceId}) async {
+    listener(await getRegistration(deviceId: deviceId));
   }
 
-  Future<Uri?> createPaymentSession(EMVPaymentRequest payment) async {
-    var deviceId = await EmvPlatformService.getDeviceId();
+  Future<Uri?> createPaymentSession(EMVPaymentRequest payment, String deviceId) async {
     dynamic meta = jsonDecode(payment.meta ?? '{}');
     meta['deviceId'] = deviceId;
     meta['original_session_id'] = payment.sessionId;
@@ -124,8 +122,7 @@ class SessionService extends ChangeNotifier {
     );
   }
 
-  Future<List<TransactionEntry>> transactionHistory() async {
-    var deviceId = await EmvPlatformService.getDeviceId();
+  Future<List<TransactionEntry>> transactionHistory({required String deviceId}) async {
     List<TransactionEntry> transactions = [];
     var response = await http.post(
       Uri.https(config.url, '/api/v1/reports/tx_log'),
@@ -198,8 +195,7 @@ class SessionService extends ChangeNotifier {
     return (response.statusCode == 200);
   }
 
-  Future<bool> updateFirebaseId(String token) async {
-    var deviceId = await EmvPlatformService.getDeviceId();
+  Future<bool> updateFirebaseId(String token, String deviceId) async {
     var response = await http.post(
       Uri.https(
         config.url,
