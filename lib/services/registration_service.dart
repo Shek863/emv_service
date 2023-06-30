@@ -78,7 +78,7 @@ class RegistrationService {
     );
   }
 
-  Future<Profile?> completeRegistration({
+  Future<http.Response?> completeRegistration({
     required String otp,
     required String msisdn,
     required String firebaseId,
@@ -101,12 +101,6 @@ class RegistrationService {
         'Content-Type': 'application/json',
       },
     );
-    if (response.statusCode == 200) {
-      var registration = await service.getRegistration(deviceId: deviceId);
-      if (registration.success) {
-        return Profile.fromRegistration(registration);
-      }
-    }
-    return null;
+    return response;
   }
 }
