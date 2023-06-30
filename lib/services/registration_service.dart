@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'model/config.dart';
-import '../model/profile.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import '../services/session_service.dart';
@@ -20,7 +19,7 @@ class RegistrationService {
         utf8.encode('${config.merchantId}:${config.merchantCode}'));
   }
 
-  Future<dynamic> initRegistration({
+  Future<Response> initRegistration({
     required String msisdn,
     required String lastName,
     required String firstName,
@@ -37,23 +36,7 @@ class RegistrationService {
         'Content-Type': 'application/json',
       },
     );
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['is_inserted'] == true) {
-        var otp = data['otp'];
-        response = await dispatchOTP(
-          otp: otp,
-          msisdn: msisdn,
-          lastName: lastName,
-          firstName: firstName,
-          merchantName: merchantName,
-        );
-        if (response.statusCode == 200) {
-          return ({"success": true, "otp": otp});
-        }
-      }
-    }
-    return ({"success": false});
+    return response;
   }
 
   Future<Response> dispatchOTP({
@@ -78,7 +61,7 @@ class RegistrationService {
     );
   }
 
-  Future<http.Response?> completeRegistration({
+  Future<Response?> completeRegistration({
     required String otp,
     required String msisdn,
     required String firebaseId,
