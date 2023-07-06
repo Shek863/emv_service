@@ -14,7 +14,7 @@ TransferProfile _$TransferProfileFromJson(Map<String, dynamic> json) =>
       json['old_msisdn'] as String? ?? '',
       json['new_msisdn'] as String? ?? '',
       json['otp'] as String? ?? '',
-      json['device_id'] as String? ?? false,
+      json['device_id'] as String? ?? '',
       json['server_error'] as bool? ?? false,
     );
 
@@ -26,6 +26,6 @@ Map<String, dynamic> _$TransferProfileToJson(TransferProfile instance) =>
       'old_msisdn': instance.oldMsisdn,
       'new_msisdn': instance.newMsisdn,
       'otp': instance.otp,
-      'device_id': instance.deviceDd,
+      'device_id': instance.deviceId,
       'server_error': instance.serverError,
     };

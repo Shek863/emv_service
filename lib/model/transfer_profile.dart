@@ -16,8 +16,8 @@ class TransferProfile {
   String newMsisdn;
   @JsonKey(name: 'otp', defaultValue: '')
   String otp;
-  @JsonKey(name: 'device_id', defaultValue: false)
-  String deviceDd;
+  @JsonKey(name: 'device_id', defaultValue: '')
+  String deviceId;
   @JsonKey(name: 'server_error', defaultValue: false)
   bool serverError;
 
@@ -29,7 +29,7 @@ class TransferProfile {
     this.oldMsisdn,
     this.newMsisdn,
     this.otp,
-    this.deviceDd,
+    this.deviceId,
     this.serverError
   );
 
