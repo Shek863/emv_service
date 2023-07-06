@@ -125,9 +125,16 @@ class ProfileService {
       Uri.https(config.url, uri),
       body: jsonEncode(request),
       headers: {
+        'Authorization': 'Basic $_auth',
         'Content-Type': 'application/json',
       },
     );
     return response;
+  }
+
+  String get _auth {
+    return base64Encode(
+      utf8.encode('${config.merchantId}:${config.merchantCode}'),
+    );
   }
 }
