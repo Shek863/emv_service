@@ -117,6 +117,17 @@ class ProfileService {
     );
   }
 
+  Future<Response> fetchProfile({
+    required String profileId,
+  }) async {
+    return await _processRequest(
+      uri: '/api/v2/mevo/user_profile/fetch',
+      request: {
+        "user_profile_id": profileId,
+      },
+    );
+  }
+
   Future<Response> _processRequest({
     required String uri,
     dynamic request,
