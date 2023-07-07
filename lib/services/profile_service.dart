@@ -47,7 +47,7 @@ class ProfileService {
     required String terminalId,
   }) async {
     return await _processRequest(
-      uri: '/api/v2/mevo/terminal/check_registration',
+      uri: '/api/v2/mevo/user_profile/register',
       request: {
         "msisdn": msisdn,
         "surname": surname,
@@ -66,7 +66,7 @@ class ProfileService {
     required String deviceId,
   }) async {
     return await _processRequest(
-      uri: '/api/v2/mevo/terminal/check_registration',
+      uri: '/api/v1/terminal/register_terminal',
       request: {
         "otp": otp,
         "device_id": deviceId,
@@ -110,7 +110,7 @@ class ProfileService {
     required String profileId,
   }) async {
     return await _processRequest(
-      uri: '/api/v2/mevo/terminal/transfer',
+      uri: '/api/v2/mevo/user_profile/unregister',
       request: {
         "user_profile_id": profileId,
       },
