@@ -22,6 +22,12 @@ class Registration {
   bool serverError;
   @JsonKey(name: 'meta')
   Map<String, dynamic> meta;
+  @JsonKey(name: 'surname', defaultValue: '')
+  final String lastName;
+  @JsonKey(name: 'first_name', defaultValue: '')
+  final String firstName;
+  @JsonKey(name: 'otp', defaultValue: '')
+  final String otp;
 
   Registration(
     this.registered,
@@ -33,6 +39,9 @@ class Registration {
     this.terminalBlocked,
     this.serverError,
     this.meta,
+    this.lastName,
+    this.firstName,
+    this.otp,
   );
 
   Map<String, dynamic> toJson() => _$RegistrationToJson(this);
