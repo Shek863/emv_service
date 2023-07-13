@@ -74,6 +74,17 @@ class ProfileService {
     );
   }
 
+  Future<Response> resendOTP({
+    required String deviceId,
+  }) async {
+    return await _processRequest(
+      uri: '/api/v2/mevo/terminal/resent_otp',
+      request: {
+        "device_id": deviceId,
+      },
+    );
+  }
+
   Future<Response> updateProfile({
     String? email,
     required String surname,
