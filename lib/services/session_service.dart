@@ -48,7 +48,8 @@ class SessionService extends ChangeNotifier {
     listener(await getRegistration(deviceId: deviceId));
   }
 
-  Future<Uri?> createPaymentSession(EMVPaymentRequest payment, String deviceId) async {
+  Future<Uri?> createPaymentSession(
+      EMVPaymentRequest payment, String deviceId, dynamic action) async {
     dynamic meta = jsonDecode(payment.meta);
     meta['deviceId'] = deviceId;
     meta['original_session_id'] = payment.sessionId;
@@ -70,6 +71,42 @@ class SessionService extends ChangeNotifier {
         "mobile_device_id": deviceId,
         "profile_id": payment.profileId,
         "callback_url": "payment_completed",
+      }),
+      headers: {
+        'Authorization': 'Basic $auth2',
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var url = jsonDecode(response.body);
+      if (url['url'] != null) {
+        return Uri.parse(url['url']);
+      }
+    }
+    return null;
+  }
+
+  Future<Uri?> createTT3Session(
+    EMVPaymentRequest payment,
+    String deviceId,
+  ) async {
+    dynamic meta = jsonDecode(payment.meta);
+    meta['deviceId'] = deviceId;
+    meta['original_session_id'] = payment.sessionId;
+    var response = await http.post(
+      Uri.https(
+        config.url,
+        '/api/v1/session',
+      ),
+      body: jsonEncode({
+        "operation": "cnp_dc",
+        'msisdn': payment.msisdn,
+        "ref_id": payment.reference,
+        "wamsisdn": meta['wamsisdn'],
+        "callback_url": "payment_completed",
+        "contract": meta,
+        "mobile_device_id": deviceId,
+        "profile_id": payment.profileId,
       }),
       headers: {
         'Authorization': 'Basic $auth2',
@@ -122,7 +159,8 @@ class SessionService extends ChangeNotifier {
     );
   }
 
-  Future<List<TransactionEntry>> transactionHistory({required String deviceId}) async {
+  Future<List<TransactionEntry>> transactionHistory(
+      {required String deviceId}) async {
     List<TransactionEntry> transactions = [];
     var response = await http.post(
       Uri.https(config.url, '/api/v1/reports/tx_log'),
