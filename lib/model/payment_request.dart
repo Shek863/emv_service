@@ -11,7 +11,6 @@ class EMVPaymentRequest {
   final Currency currency;
   final String merchantToken;
   final String transactionType;
-  final dynamic action;
 
   EMVPaymentRequest({
     required this.meta,
