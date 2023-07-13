@@ -5,5 +5,4 @@ enum SessionState {
   complete,
   processing,
   removeCard,
-  timedOut,
 }
