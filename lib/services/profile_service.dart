@@ -51,10 +51,10 @@ class ProfileService {
       request: {
         "msisdn": msisdn,
         "surname": surname,
-        "email_address": email,
         "first_name": firstName,
         "firebase_id": firebaseId,
         "merchant_id": merchantId,
+        "email_address": email ?? '',
         "mobile_device_id": deviceId,
         "bank_terminal_id": terminalId,
       },
