@@ -20,8 +20,6 @@ class Registration {
   bool terminalBlocked;
   @JsonKey(name: 'server_error', defaultValue: false)
   bool serverError;
-  @JsonKey(name: 'meta', defaultValue: {})
-  Map<String, dynamic> meta;
   @JsonKey(name: 'surname', defaultValue: '')
   final String lastName;
   @JsonKey(name: 'first_name', defaultValue: '')
@@ -38,7 +36,6 @@ class Registration {
     this.msisdn,
     this.terminalBlocked,
     this.serverError,
-    this.meta,
     this.lastName,
     this.firstName,
     this.otp,
