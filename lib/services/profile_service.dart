@@ -69,7 +69,7 @@ class ProfileService {
       uri: '/api/v1/terminal/register_terminal',
       request: {
         "otp": otp,
-        "device_id": deviceId,
+        "mobile_device_id": deviceId,
       },
     );
   }
