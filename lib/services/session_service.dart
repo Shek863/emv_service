@@ -49,7 +49,7 @@ class SessionService extends ChangeNotifier {
   }
 
   Future<Uri?> createPaymentSession(
-      EMVPaymentRequest payment, String deviceId, dynamic action) async {
+      EMVPaymentRequest payment, String deviceId) async {
     dynamic meta = jsonDecode(payment.meta);
     meta['deviceId'] = deviceId;
     meta['original_session_id'] = payment.sessionId;
