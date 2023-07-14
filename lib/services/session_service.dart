@@ -113,6 +113,19 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
+    var data = {
+      "operation": "cnp_dc",
+      'msisdn': payment.msisdn,
+      "ref_id": payment.reference,
+      "wamsisdn": meta['wamsisdn'],
+      "callback_url": "payment_completed",
+      "contract": meta,
+      "mobile_device_id": deviceId,
+      "profile_id": payment.profileId,
+    };
+    print('______TT3 DATA${data}');
+    print('______TT3 RESPONSE__${response.body}');
+    print('______TT3 RESPONSE__${response.statusCode}');
     if (response.statusCode == 200) {
       var url = jsonDecode(response.body);
       if (url['url'] != null) {
