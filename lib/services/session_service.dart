@@ -95,7 +95,7 @@ class SessionService extends ChangeNotifier {
     meta['original_session_id'] = payment.sessionId;
     var response = await http.post(
       Uri.https(
-        config.url,
+        config.tt3Url,
         '/api/v1/session',
       ),
       body: jsonEncode({

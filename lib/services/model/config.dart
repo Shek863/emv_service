@@ -11,6 +11,7 @@ const channelId = 'high_importance_channel';
 
 class Config {
   final String url;
+  final String tt3Url;
   final String otpUrl;
   final String merchantId;
   final String merchantCode;
@@ -22,6 +23,7 @@ class Config {
     required this.merchantCode,
     this.bankTerminalId = '000000000167510',
     this.otpUrl = 'wa-mevo.wizzitdigital.com',
+    this.tt3Url = 'aken.staging.wizzitdigital.com',
   });
 
   static Config fromEnv({
