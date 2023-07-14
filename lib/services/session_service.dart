@@ -99,14 +99,14 @@ class SessionService extends ChangeNotifier {
         '/api/v1/session',
       ),
       body: jsonEncode({
+        "contract": meta,
         "operation": "cnp_dc",
         'msisdn': payment.msisdn,
         "ref_id": payment.reference,
-        "wamsisdn": meta['wamsisdn'],
-        "callback_url": "payment_completed",
-        "contract": meta,
         "mobile_device_id": deviceId,
         "profile_id": payment.profileId,
+        "callback_url": "payment_completed",
+        "wamsisdn": meta['wamsisdn'] ?? payment.msisdn,
       }),
       headers: {
         'Authorization': 'Basic $auth2',
@@ -114,16 +114,16 @@ class SessionService extends ChangeNotifier {
       },
     );
     var data = {
+      "contract": meta,
       "operation": "cnp_dc",
       'msisdn': payment.msisdn,
       "ref_id": payment.reference,
-      "wamsisdn": meta['wamsisdn'],
-      "callback_url": "payment_completed",
-      "contract": meta,
       "mobile_device_id": deviceId,
       "profile_id": payment.profileId,
+      "callback_url": "payment_completed",
+      "wamsisdn": meta['wamsisdn'] ?? payment.msisdn,
     };
-    print('______TT3 DATA${data}');
+    print('______TT3 DATA${jsonEncode(data)}');
     print('______TT3 RESPONSE__${response.body}');
     print('______TT3 RESPONSE__${response.statusCode}');
     if (response.statusCode == 200) {
