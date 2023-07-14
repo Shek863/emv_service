@@ -123,9 +123,9 @@ class SessionService extends ChangeNotifier {
       "callback_url": "payment_completed",
       "wamsisdn": meta['wamsisdn'] ?? payment.msisdn,
     };
-    print('______TT3 DATA${jsonEncode(data)}');
-    print('______TT3 RESPONSE__${response.body}');
-    print('______TT3 RESPONSE__${response.statusCode}');
+    print('______TT3 DATA______:${jsonEncode(data)}');
+    print('______TT3 RESPONSE__:${response.body}');
+    print('______TT3 RESPONSE__:${response.statusCode}');
     if (response.statusCode == 200) {
       var url = jsonDecode(response.body);
       if (url['url'] != null) {
