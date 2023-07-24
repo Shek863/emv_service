@@ -78,7 +78,7 @@ class ProfileService {
     required String deviceId,
   }) async {
     return await _processRequest(
-      uri: '/api/v2/mevo/terminal/resent_otp',
+      uri: '/api/v2/mevo/terminal/resend_otp',
       request: {
         "device_id": deviceId,
       },

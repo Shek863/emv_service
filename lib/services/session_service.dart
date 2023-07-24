@@ -2,53 +2,18 @@ import 'dart:convert';
 import 'model/config.dart';
 import 'model/payment.dart';
 import '../model/profile.dart';
-import 'model/transaction_entry.dart';
+import 'package:http/http.dart';
 import '../model/payment_request.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
-import 'model/pending_transaction_entry.dart';
 import '../listeners/model/registration_status.dart';
-
-typedef SessionRegistrationListener = void Function(
-    RegistrationStatus response);
 
 class SessionService extends ChangeNotifier {
   final Config config;
 
   SessionService(this.config);
 
-  Future<RegistrationStatus> getRegistration({required String deviceId}) async {
-    var response = await http.post(
-      Uri.https(
-        config.url,
-        '/api/v1/mevo/check_registration',
-      ),
-      body: jsonEncode({
-        'device_id': deviceId,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['is_registered'] == true) {
-        data['deviceId'] = deviceId;
-        return RegistrationStatus.fromJson(data);
-      }
-    }
-    return RegistrationStatus.fromJson({
-      "is_registered": false,
-      "deviceId": deviceId,
-    });
-  }
-
-  void doCheckRegistration(SessionRegistrationListener listener,
-      {required String deviceId}) async {
-    listener(await getRegistration(deviceId: deviceId));
-  }
-
-  Future<Uri?> createPaymentSession(
+  Future<Response> createPaymentSession(
       EMVPaymentRequest payment, String deviceId) async {
     dynamic meta = jsonDecode(payment.meta);
     meta['deviceId'] = deviceId;
@@ -77,16 +42,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    if (response.statusCode == 200) {
-      var url = jsonDecode(response.body);
-      if (url['url'] != null) {
-        return Uri.parse(url['url']);
-      }
-    }
-    return null;
+    return response;
   }
 
-  Future<Uri?> createTT3Session(
+  Future<Response> createTT3Session(
     EMVPaymentRequest payment,
     String deviceId,
   ) async {
@@ -113,26 +72,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    var data = {
-      "contract": meta,
-      "operation": "cnp_dc",
-      'msisdn': payment.msisdn,
-      "ref_id": payment.reference,
-      "mobile_device_id": deviceId,
-      "profile_id": payment.profileId,
-      "callback_url": "payment_completed",
-      "wamsisdn": meta['wamsisdn'] ?? payment.msisdn,
-    };
-    if (response.statusCode == 200) {
-      var url = jsonDecode(response.body);
-      if (url['url'] != null) {
-        return Uri.parse(url['url']);
-      }
-    }
-    return null;
+    return response;
   }
 
-  Future<Payment?> paymentSession(String sessionId) async {
+  Future<Response> paymentSession(String sessionId) async {
     var response = await http.post(
       Uri.https(
         config.url,
@@ -146,15 +89,7 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['error'] == false) {
-        var result = data['session_data'];
-        result['expire'] = data['expiry_date'];
-        return Payment.fromJson(result);
-      }
-    }
-    return null;
+    return response;
   }
 
   String get auth {
@@ -169,9 +104,7 @@ class SessionService extends ChangeNotifier {
     );
   }
 
-  Future<List<TransactionEntry>> transactionHistory(
-      {required String deviceId}) async {
-    List<TransactionEntry> transactions = [];
+  Future<Response> transactionHistory({required String deviceId}) async {
     var response = await http.post(
       Uri.https(config.url, '/api/v1/reports/tx_log'),
       body: jsonEncode({
@@ -190,18 +123,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['error'] == false) {
-        List<dynamic> entries = data['rows'];
-        transactions =
-            entries.map((e) => TransactionEntry.fromJson(e)).toList();
-      }
-    }
-    return transactions;
+    return response;
   }
 
-  Future<String?> validateMobileNumber(String mobileNumber) async {
+  Future<Response?> validateMobileNumber(String mobileNumber) async {
     var response = await http.post(
       Uri.https(
         config.url,
@@ -215,16 +140,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['error'] == false) {
-        return data['firebase_id'];
-      }
-    }
-    return null;
+    return response;
   }
 
-  Future<bool> sendFirebasePayment(Payment payment) async {
+  Future<Response> sendFirebasePayment(Payment payment) async {
     var response = await http.post(
       Uri.https(
         config.url,
@@ -240,10 +159,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    return (response.statusCode == 200);
+    return response;
   }
 
-  Future<bool> updateFirebaseId(String token, String deviceId) async {
+  Future<Response> updateFirebaseId(String token, String deviceId) async {
     var response = await http.post(
       Uri.https(
         config.url,
@@ -258,11 +177,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    return response.statusCode == 200;
+    return response;
   }
 
-  Future<List<TransactionEntry>> profileTransactionsHistory(
-      Profile profile) async {
+  Future<Response> profileTransactionsHistory(Profile profile) async {
     var response = await http.post(
       Uri.https(config.url, '/api/v1/reports/tx_log'),
       body: jsonEncode({
@@ -281,34 +199,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['error'] == false) {
-        List<dynamic> entries = data['rows'];
-        try {
-          return entries
-              .where((e) => isValid(e))
-              .map((e) => TransactionEntry.fromJson(e))
-              .toList();
-        } catch (e) {
-          return [];
-        }
-      }
-    }
-    return [];
+    return response;
   }
 
-  bool isValid(dynamic data) {
-    try {
-      TransactionEntry.fromJson(data);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
-
-  Future<List<PendingTransactionEntry>> profilePendingTransactions(
-      Profile profile) async {
+  Future<Response> profilePendingTransactions(Profile profile) async {
     var response = await http.post(
       Uri.https(config.url, '/api/v1/reports/pending_tx_log'),
       body: jsonEncode({
@@ -319,24 +213,10 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['error'] == false) {
-        List<dynamic> entries = data['rows'];
-        try {
-          return entries
-              .map((e) => PendingTransactionEntry.fromJson(e))
-              .toList();
-        } catch (error) {
-          return [];
-        }
-      }
-    }
-    return [];
+    return response;
   }
 
-  Future<bool> rejectPaymentRequest(String sessionId) async {
+  Future<Response> rejectPaymentRequest(String sessionId) async {
     var response = await http.post(
       Uri.https(config.url, '/api/v1/delete_pending_tx'),
       body: jsonEncode({
@@ -347,21 +227,6 @@ class SessionService extends ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
-    return response.statusCode == 200;
-  }
-
-  /// Place-holder fo profile de-registration
-  Future<bool> deregisterProfile(String profileId) async {
-    var response = await http.post(
-      Uri.https(config.url, '/api/v1/delete_profile'),
-      body: jsonEncode({
-        "profile_id": profileId,
-      }),
-      headers: {
-        'Authorization': 'Basic $auth2',
-        'Content-Type': 'application/json',
-      },
-    );
-    return response.statusCode == 200;
+    return response;
   }
 }
