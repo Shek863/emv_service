@@ -6,7 +6,6 @@ import 'package:http/http.dart';
 import '../model/payment_request.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
-import '../listeners/model/registration_status.dart';
 
 class SessionService extends ChangeNotifier {
   final Config config;
