@@ -80,7 +80,7 @@ class ProfileService {
     return await _processRequest(
       uri: '/api/v2/mevo/terminal/resend_otp',
       request: {
-        "device_id": deviceId,
+        "mobile_device_id": deviceId,
       },
     );
   }
