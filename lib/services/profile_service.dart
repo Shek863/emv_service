@@ -42,6 +42,7 @@ class ProfileService {
     required String surname,
     required String deviceId,
     required String firstName,
+    required String tcVersion,
     required String merchantId,
     required String firebaseId,
     required String terminalId,
@@ -51,6 +52,7 @@ class ProfileService {
       request: {
         "msisdn": msisdn,
         "surname": surname,
+        "tc_version": tcVersion,
         "first_name": firstName,
         "firebase_id": firebaseId,
         "merchant_id": merchantId,
@@ -88,6 +90,7 @@ class ProfileService {
   Future<Response> updateProfile({
     String? email,
     required String surname,
+    required String tcVersion,
     required String profileId,
     required String firstName,
   }) async {
@@ -97,6 +100,7 @@ class ProfileService {
         "surname": surname,
         "email_address": email,
         "first_name": firstName,
+        "tc_version": tcVersion,
         "user_profile_id": profileId,
       },
     );
