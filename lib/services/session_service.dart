@@ -74,13 +74,14 @@ class SessionService extends ChangeNotifier {
     return response;
   }
 
-  Future<Response> paymentSession(String sessionId) async {
+  Future<Response> paymentSession(String sessionId, bool receipt) async {
     var response = await http.post(
       Uri.https(
         config.url,
         '/api/v1/cp_session',
       ),
       body: jsonEncode({
+        'receipt': receipt,
         'session_id': sessionId,
       }),
       headers: {
